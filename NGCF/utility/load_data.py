@@ -28,7 +28,7 @@ class Data(object):
         with open(train_file) as f:
             for l in f.readlines():
                 if len(l) > 0:
-                    l = l.strip('\n').split(' ')
+                    l = l.strip('\n').split('\t')
                     items = [int(i) for i in l[1:]]
                     uid = int(l[0])
                     self.exist_users.append(uid)
@@ -41,7 +41,7 @@ class Data(object):
                 if len(l) > 0:
                     l = l.strip('\n')
                     try:
-                        items = [int(i) for i in l.split(' ')[1:]]
+                        items = [int(i) for i in l.split('\t')[1:]]
                     except Exception:
                         continue
                     self.n_items = max(self.n_items, max(items))
@@ -59,7 +59,7 @@ class Data(object):
                 for l in f_train.readlines():
                     if len(l) == 0: break
                     l = l.strip('\n')
-                    items = [int(i) for i in l.split(' ')]
+                    items = [int(i) for i in l.split('\t')]
                     uid, train_items = items[0], items[1:]
 
                     for i in train_items:
@@ -72,7 +72,7 @@ class Data(object):
                     if len(l) == 0: break
                     l = l.strip('\n')
                     try:
-                        items = [int(i) for i in l.split(' ')]
+                        items = [int(i) for i in l.split('\t')]
                     except Exception:
                         continue
 
