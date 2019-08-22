@@ -98,7 +98,8 @@ def test_one_user(x):
 
     all_items = set(range(ITEM_NUM))
 
-    test_items = list(all_items - set(training_items))
+    #test_items = list(all_items - set(training_items))
+    test_items = list(all_items)
 
     if args.test_flag == 'part':
         r, auc = ranklist_by_heapq(user_pos_test, test_items, rating, Ks)

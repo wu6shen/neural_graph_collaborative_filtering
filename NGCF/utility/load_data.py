@@ -53,6 +53,9 @@ class Data(object):
 
         self.R = sp.dok_matrix((self.n_users, self.n_items), dtype=np.float32)
 
+        self.Z_u = sp.lil_matrix((self.n_users, self.n_users), dtype=np.float32)
+        self.Z_i = sp.lil_matrix((self.n_items, self.n_items), dtype=np.float32)
+
         self.train_items, self.test_set = {}, {}
         with open(train_file) as f_train:
             with open(test_file) as f_test:
@@ -100,8 +103,11 @@ class Data(object):
         adj_mat = adj_mat.tolil()
         R = self.R.tolil()
 
-        adj_mat[:self.n_users, self.n_users:] = R
-        adj_mat[self.n_users:, :self.n_users] = R.T
+        adj_mat = sp.vstack([sp.hstack([self.Z_u, R]), sp.hstack([self.Z_i, R.T])]).tolil()
+        
+
+        #adj_mat[:self.n_users, self.n_users:] = R
+        #adj_mat[self.n_users:, :self.n_users] = R.T
         adj_mat = adj_mat.todok()
         print('already create adjacency matrix', adj_mat.shape, time() - t1)
 
